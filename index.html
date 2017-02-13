@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>SQL Log Viewer</title>
+        
+        <link rel="stylesheet" href="assets/css/prism-okaidia.css">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.9/css/jquery.dataTables.css">
+        <link rel="stylesheet" href="assets/css/style.css">
+
+        <script src="node_modules/es6-shim/es6-shim.min.js"></script>       
+        <script src="node_modules/angular2/bundles/angular2-polyfills.js"></script>
+        <script src="node_modules/systemjs/dist/system.src.js"></script>
+        <script src="node_modules/rxjs/bundles/Rx.js"></script>
+        <script src="node_modules/angular2/bundles/angular2.dev.js"></script>
+        
+        <script>
+            System.config({
+                packages: {
+                    'app': {
+                        defaultExtension: 'js'
+                    },
+                    'ng2-bootstrap': {},
+                    'moment': {},
+                    'traceur': {},
+                    'ng2-table': {},
+                    'angular2': {}
+                },
+                map: {
+                    'ng2-bootstrap': 'node_modules/ng2-bootstrap',
+                    'moment': 'node_modules/moment/moment.js',
+                    'ng2-table': 'node_modules/ng2-table',
+                    'angular2': 'node_modules/angular2'
+                }
+            });
+
+             System.import('app/index')
+                .then(null, console.error.bind(console));
+        </script>
+    </head>
+
+    <body>
+        <viewer-app>Loading...</viewer-app>
+    </body>
+</html>

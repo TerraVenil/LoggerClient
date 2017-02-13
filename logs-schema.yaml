@@ -1,0 +1,134 @@
+swagger: '2.0'
+info:
+  title: Logs API
+  description: Operations with Logs
+  version: 1.0.0
+host: 'localhost:3000'
+schemes:
+  - http
+basePath: /api/v1
+produces:
+  - application/json
+paths:
+  /logs:
+    get:
+      summary: Get all logs
+      description: |
+        Get all logs.
+      tags:
+        - Logs
+      responses:
+        '200':
+          description: An object of log model
+          schema:
+            $ref: '#/definitions/LogModel'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+  /logsByQuery:
+    get:
+      summary: Get logs by page number and page size
+      description: |
+        Get logs by page number and page size.
+      parameters:
+        - name: pageNumber
+          in: query
+          description: Page number of grid
+          required: true
+          type: integer
+          format: int32
+          enum:
+            - 1
+            - 5
+            - 10
+          default: 1
+        - name: pageSize
+          in: query
+          description: Page size of grid.
+          required: true
+          type: integer
+          format: int32
+          enum:
+            - 5
+            - 20
+            - 30
+          default: 5
+      tags:
+        - Logs
+      responses:
+        '200':
+          description: An object of log grid model
+          schema:
+            $ref: '#/definitions/LogGridModel'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+definitions:
+  LogGridModel:
+    type: object
+    required:
+      - pageModel
+      - logModels
+    properties:
+      pageModel:
+        $ref: '#/definitions/PageModel'
+      logModels:
+        type: array
+        items:
+          $ref: '#/definitions/LogModel'
+  PageModel:
+    type: object
+    required:
+      - pageNumber
+      - pageSize
+      - pageTotal
+    properties:
+      pageNumber:
+        type: number
+        format: int32
+        default: 1
+      pageSize:
+        type: number
+        format: int32
+        default: 5
+      pageTotal:
+        type: number
+        format: int32
+        default: 30
+  LogModel:
+    type: object
+    required:
+      - id
+      - date
+      - level
+      - message
+      - machineName
+    properties:
+      id:
+        type: integer
+        format: int32
+        default: 2
+      date:
+        type: string
+        format: date-time
+      level:
+        type: string
+        default: Info
+      message:
+        type: string
+        default: 'received request #CBB6A7: [GET] https://localhost:49716/api/v1/user_info'
+      machineName:
+        type: string
+        default: WANDER
+  Error:
+    type: object
+    properties:
+      code:
+        type: integer
+        format: int32
+      message:
+        type: string
+      fields:
+        type: string
